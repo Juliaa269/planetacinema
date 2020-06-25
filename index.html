@@ -4,7 +4,6 @@
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     </head>
     <body>
-        
         <div id="app">
             <ul id="example-1">
                 <li v-for="movie in movies" :key="movie.id">
@@ -21,7 +20,6 @@
                   <h2>Duration</h2>
                   <input type="text" v-model="duration" />
                 </div>
-          
                 <div>
                   <h2>Add</h2>
                   <input type="submit" value="add" v-on:click="submit" />

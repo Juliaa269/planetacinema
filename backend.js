@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const sqlite3 = require('sqlite3').verbose();
 const dbConfig = require("./db.js");
 var uuid = require('uuid-random');
+const date = require('date-and-time');
 var cors = require('cors')
 const PORT=3001;
 
@@ -45,6 +46,17 @@ function addMovie(movie) {
   }); 
 }
 
+async function getSchedule(input) {
+  const jsPattern = date.compile('YYYY-MM-DD');
+  const sqlPattern = date.compile('YYYY-MM-DD HH:mm:ss');
+
+  var start = date.parse(input, jsPattern), end = date.parse(input, jsPattern);
+  start.setHours(0, 0, 0);
+  end.setHours(23,59,59);
+
+  console.log(`SELECT * FROM shows WHERE time_at BETWEEN ${date.format(start, sqlPattern)} AND ${date.format(end, sqlPattern)}`)
+  return await query(`SELECT * FROM shows WHERE time_at BETWEEN '${date.format(start, sqlPattern)}' AND '${date.format(end, sqlPattern)}'`)
+}
 const listMovies = function(){
   var result = [];
   db.serialize(() => {
@@ -58,6 +70,11 @@ const listMovies = function(){
   });
   return result;
 }
+
+app.get('/schedule', async (req, res)=>{
+  let body = await getSchedule(req.query.date);
+  res.json(body);
+});
 
 app.post('/movies', (req, res)=>{
   console.log(JSON.stringify(req.body))
