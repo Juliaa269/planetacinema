@@ -4,7 +4,10 @@
   "description": "web service for cinema",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "backend": "node backend.js ",
+    "edge": "node admin_server.js ",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "infra": "rm -rf db && mkdir -p db && sqlite3 db/planetcinema.db <  create_db.sql"
   },
   "repository": {
     "type": "git",

@@ -33,11 +33,11 @@
 <script>
     var app = new Vue({ 
         el: '#app',
-        data: () => ({
+        data: {
             movies: null,
             title: null, 
             duration: null
-        }),
+        },
         mounted: function () { 
            this.reload(); 
         }, 
@@ -56,12 +56,11 @@
                 console.log(this.duration)
                 axios.post('http://localhost:3001/movies', {title:this.title, duration:this.duration})
                 .then(response => {
-                    (this.movies = response.data)
+                    this.reload()
                 })
                 .catch(function (error) {
                     movies = error;
                 });
-                this.reload()
             }
         }
     });

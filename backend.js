@@ -62,6 +62,7 @@ const listMovies = function(){
 app.post('/movies', (req, res)=>{
   console.log(JSON.stringify(req.body))
   addMovie(req.body)
+  res.status(200).send();
 });
 //  простой response - request
 app.get("/", async (req, res) => {
