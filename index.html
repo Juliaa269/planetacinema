@@ -1,0 +1,69 @@
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+        
+        <div id="app">
+            <ul id="example-1">
+                <li v-for="movie in movies" :key="movie.id">
+                  {{ movie.title }} {{ movie.duration }}
+                </li>
+              </ul>
+              <div>
+                <div>
+                  <h2>Movie Title</h2>
+                  <input type="text" v-model="title" />
+                </div>
+          
+                <div>
+                  <h2>Duration</h2>
+                  <input type="text" v-model="duration" />
+                </div>
+          
+                <div>
+                  <h2>Add</h2>
+                  <input type="submit" value="add" v-on:click="submit" />
+                </div>
+              </div>
+        </div>
+        
+    </body>
+<script>
+    var app = new Vue({ 
+        el: '#app',
+        data: () => ({
+            movies: null,
+            title: null, 
+            duration: null
+        }),
+        mounted: function () { 
+           this.reload(); 
+        }, 
+        methods: {
+            reload: function() {
+                axios.get('http://localhost:3002/movies')
+                .then(response => {
+                    (this.movies = response.data)
+                })
+                .catch(function (error) {
+                    movies = error;
+                });
+            },
+            submit: function() {
+                console.log(this.title)
+                console.log(this.duration)
+                axios.post('http://localhost:3001/movies', {title:this.title, duration:this.duration})
+                .then(response => {
+                    (this.movies = response.data)
+                })
+                .catch(function (error) {
+                    movies = error;
+                });
+                this.reload()
+            }
+        }
+    });
+</script>
+</html>
