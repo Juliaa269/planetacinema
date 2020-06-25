@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View session by date</title>
+</head>
+<body>
+    <div>
+        <form class="book-ticket" action="select1.php" method="post">
+            <p>
+                <select size="1">
+                    <option disabled>Выберите фильм</option>
+                    <option value="Madagaskar1">Мадагаскар 1</option>
+                    <option selected value="harryPotter3">Гарри Поттер 3</option>
+                    <option value="Madagaskar2">Мадагаскар 2</option>
+                    <option value="harryPotter2">Гарри Поттер 2</option>
+                </select>
+            </p>
+            <p>
+                <select size="1">
+                    <option disabled>Выберите сеанс</option>
+                    <option value="Madagaskar1">26.06.2020,10:00</option>
+                    <option selected value="Madagaskar1">26.06.2020,12:00</option>
+                </select>
+            </p>
+            <p><b>Сколько билетов необходимо приобрести?</b></p>
+            <p><input name="capacity" type="radio" value="one">1</p>
+            <p><input name="capacity" type="radio" value="two">2</p>
+            <p><input name="capacity" type="radio" value="three" checked>3</p>
+            <p><input name="capacity" type="radio" value="four">4</p>
+            <p><input name="capacity" type="radio" value="five">5</p>
+            <p><input name="capacity" type="radio" value="six" checked>6</p>
+            <p><input type="submit" value="Отправить"></p>
+        </form>
+    </div>
+</body>
+</html>
