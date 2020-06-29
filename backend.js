@@ -140,7 +140,14 @@ function createShow(show) {
 
 app.get('/schedule/:show_date', async (req, res)=>{
   console.log(JSON.stringify(req.params.show_date))
-  let data = await getMovieSchedule(req.params.show_date)
+  let data = await getScheduleMovie(req.params.show_date)
+  console.log(data)
+  res.status(200).send(data);
+});
+
+app.get('/schedule/:show_date/:movie_id', async (req, res)=>{
+  console.log(JSON.stringify(req.params.show_date))
+  let data = await getSchedule(req.params.show_date, req.params.movie_id)
   console.log(data)
   res.status(200).send(data);
 });
@@ -167,7 +174,7 @@ async function listShows() {
   return result;
 }
 
-async function getSchedule(input) {
+async function getSchedule(input, movie_id) {
   const jsPattern = date.compile('YYYY-MM-DD');
   const sqlPattern = date.compile('YYYY-MM-DD HH:mm:ss');
 
@@ -177,11 +184,12 @@ async function getSchedule(input) {
   end.setHours(23,59,59);
   console.log(start)
   console.log(end)
-  console.log(`SELECT * FROM shows WHERE time_at BETWEEN ${date.format(start, sqlPattern)} AND ${date.format(end, sqlPattern)}`)
-  return await query(`SELECT * FROM shows WHERE time_at BETWEEN '${date.format(start, sqlPattern)}' AND '${date.format(end, sqlPattern)}'`)
+  let sql = `SELECT * FROM shows WHERE time_at BETWEEN '${date.format(start, sqlPattern)}' AND '${date.format(end, sqlPattern)}' AND movie_id = '${movie_id}'`;
+  console.log(sql)
+  return await query(sql)
 }
 
-async function getMovieSchedule(input) {
+async function getScheduleMovie(input) {
   const jsPattern = date.compile('YYYY-MM-DD');
   const sqlPattern = date.compile('YYYY-MM-DD HH:mm:ss');
 
