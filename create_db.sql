@@ -1,13 +1,13 @@
 CREATE TABLE shows(id varchar, movie_id varchar, time_at datetime, chairs int, room varchar);
-CREATE TABLE movie(id varchar, title varchar, duration int);
+CREATE TABLE movie(id varchar, title varchar, duration int, poster varchar);
 CREATE TABLE tickets(id varchar, show_id varchar, chair int, status varchar DEFAULT 'AVAILABLE');
 CREATE TABLE booked_tickets(ticket_id varchar, booked_at datetime);
 
 INSERT INTO movie VALUES
-('69152ce0-b708-11ea-b3de-0242ac130004', 'Avengers I', 144),
-('69152ef2-b708-11ea-b3de-0242ac130004', 'Avengers II', 142),
-('69152fec-b708-11ea-b3de-0242ac130004', 'Avengers III', 160),
-('691530d2-b708-11ea-b3de-0242ac130004', 'Avengers IV', 182);
+('69152ce0-b708-11ea-b3de-0242ac130004', 'Avengers I', 144, 'https://upload.wikimedia.org/wikipedia/ru/3/3c/The_Avengers_2012_logo.jpg'),
+('69152ef2-b708-11ea-b3de-0242ac130004', 'Avengers II', 142, 'https://lh3.googleusercontent.com/proxy/FA4UmI-gpDMFQG_mOFm0MI8sKqcoYpVcKADyZWFd-sdYkMyO3PRyDJpw5-pCP_EIf-yNFoUPmhYfAFu04kG1BQtoHDbL76ynYAPWLYaeoVq_OSeu8Dn6vBUr-o-OSNTR3J9__LvHaQqFlQkw4KwpSVlsUB5cXEQYbCDY63wMgOjwYU0'),
+('69152fec-b708-11ea-b3de-0242ac130004', 'Avengers III', 160, 'https://upload.wikimedia.org/wikipedia/ru/4/4d/Avengers_Infinity_War_poster.jpg'),
+('691530d2-b708-11ea-b3de-0242ac130004', 'Avengers IV', 182, 'https://upload.wikimedia.org/wikipedia/en/0/0d/Avengers_Endgame_poster.jpg');
 
 -- create new show with specific movie and time. 
 -- we have movie_id and datetime

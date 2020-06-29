@@ -17,6 +17,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
+app.del('/movies/:id', (req, res)=> {
+
+})
+
 app.get('/movies', (req, res)=>{
   axios.get(`http://localhost:${BACKEND_PORT}/`)
   .then(response => {

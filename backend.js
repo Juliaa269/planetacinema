@@ -13,6 +13,12 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+app.delete('/movies/:id', (req, res)=> {
+  console.log(`DELETE FROM movie WHERE id = ${req.params.id}`)
+  query(`DELETE FROM movie WHERE id = '${req.params.id}'`)
+  res.status(200).send();
+})
+
 // парсит запросы по типу: application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -35,15 +41,26 @@ async function listShows() {
   return result;
 }
 
-function addMovie(movie) {
-  console.log(`insert into movie VALUES(${uuid()}, ${movie.title}, ${movie.duration})`)
-  db.run(`insert into movie VALUES('${uuid()}', '${movie.title}', ${movie.duration})`, function(err) {
+function update(movie, id) {
+  console.log(`UPDATE movie SET title = '${movie.title}' , duration = ${movie.duration} , poster = '${movie.poster}' WHERE id = '${id}'`)
+  db.run(`UPDATE movie SET title = '${movie.title}' , duration = ${movie.duration} , poster = '${movie.poster}' WHERE id = '${id}'`, function(err) {
+    if (err) {
+      return console.log(err.message);
+    }
+    // get the last insert id
+    console.log(`A row has been updated with rowid ${this.lastID}`)
+  }); 
+}
+
+function create(movie) {
+  console.log(`insert into movie VALUES(${uuid()}, ${movie.title}, ${movie.duration}, '${movie.poster}')`)
+  db.run(`insert into movie VALUES('${uuid()}', '${movie.title}', ${movie.duration}, '${movie.poster}')`, function(err) {
     if (err) {
       return console.log(err.message);
     }
     // get the last insert id
     console.log(`A row has been inserted with rowid ${this.lastID}`)
-  }); 
+  });
 }
 
 async function getSchedule(input) {
@@ -76,15 +93,21 @@ app.get('/schedule', async (req, res)=>{
   res.json(body);
 });
 
-app.post('/movies', (req, res)=>{
+app.post('/movies/:id', (req, res)=>{
   console.log(JSON.stringify(req.body))
-  addMovie(req.body)
+  update(req.body, req.params.id)
   res.status(200).send();
 });
+
+app.put('/movies', (req, res)=>{
+  console.log(JSON.stringify(req.body))
+  create(req.body)
+  res.status(200).send();
+});
+
 //  простой response - request
 app.get("/", async (req, res) => {
-  console.log('requested:' + req);
-  var result = { 
+  var result = {
     greeting: "Добро пожаловать в YoKino, like, repost" , 
     movies: listMovies(),
     shows: await listShows()
